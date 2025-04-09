@@ -2,3 +2,5 @@ nature*
 venv/
 dataset/
 dataset*
+__pycache__/
+wandb/

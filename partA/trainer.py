@@ -68,7 +68,7 @@ class Trainer:
             inputs, labels = inputs.to(self.device), labels.to(self.device)
             self.optimizer.zero_grad()
             outputs = self.model(inputs)
-            loss = self.criterion(outputs, labels)
+            loss = self.loss(outputs, labels)
             loss.backward()
             self.optimizer.step()
             total_loss += loss.item()
