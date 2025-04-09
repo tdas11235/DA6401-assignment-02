@@ -58,12 +58,6 @@ class Trainer:
             batch_size=batch_size,
             shuffle=False
         )
-        self.test_loader = DataLoader(
-            datasets.ImageFolder(os.path.join(
-                data_dir, 'test'), transform=eval_transform),
-            batch_size=batch_size,
-            shuffle=False
-        )
         self.model_folder = best_model_path
         os.makedirs(self.model_folder, exist_ok=True)
 
@@ -84,12 +78,9 @@ class Trainer:
         acc = correct / total
         return total_loss / len(self.train_loader), acc
     
-    def evaluate(self, split: str = 'val'):
+    def evaluate(self):
         self.model.eval()
-        loader = {
-            'val': self.val_loader,
-            'test': self.test_loader
-        }.get(split, self.val_loader)
+        loader = self.val_loader
         total_loss, correct, total = 0, 0, 0
         with torch.no_grad():
             for inputs, labels in loader:
@@ -108,7 +99,7 @@ class Trainer:
         epoch_bar = trange(epochs, desc="Training", unit="epoch")
         for epoch in epoch_bar:
             train_loss, train_acc = self.train_epoch()
-            val_loss, val_acc = self.evaluate(split='val')
+            val_loss, val_acc = self.evaluate()
             epoch_bar.set_postfix({
                 "Train Loss": f"{train_loss:.4f}",
                 "Train Acc": f"{train_acc:.3f}",
