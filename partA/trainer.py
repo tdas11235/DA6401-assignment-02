@@ -86,7 +86,7 @@ class Trainer:
             for inputs, labels in loader:
                 inputs, labels = inputs.to(self.device), labels.to(self.device)
                 outputs = self.model(inputs)
-                loss = self.criterion(outputs, labels)
+                loss = self.loss(outputs, labels)
                 total_loss += loss.item()
                 _, preds = outputs.max(1)
                 correct += preds.eq(labels).sum().item()
