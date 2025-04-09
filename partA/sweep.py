@@ -74,7 +74,7 @@ def sweep_func():
         loss=loss,
         batch_size=64,
         augment=config.data_augmentation,
-        best_model_path='models'
+        best_model_path='partA/models'
     )
     aug_flag = "Aug" if config.data_augmentation else "NoAug"
     bn_flag = "BN" if config.batch_norm else "NoBN"
