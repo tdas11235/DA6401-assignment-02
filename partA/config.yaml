@@ -1,14 +1,15 @@
 method: bayes
+
 metric:
-  name: val_acc
+  name: best_val_acc
   goal: maximize
 
 parameters:
   start_filters:
-    values: [16, 32, 64]
+    values: [32, 64]
 
   filter_organization:
-    values: ['same', 'double', 'half']
+    values: ['same', 'double']
 
   activation_pair:
     values:
@@ -16,21 +17,32 @@ parameters:
       - ['Mish', 'GELU']
       - ['SiLU', 'GELU']
       - ['GELU', 'GELU']
+      - ['SiLU', 'ReLU'] 
 
-  kernel_size:
-    values: [3, 5, 7]
+  start_kernel:
+    values: [7, 5]
+
+  kernel_organization:
+    values: ['decrease', 'same']
 
   learning_rate:
-    values: [0.0001, 0.0008, 0.001, 0.003]
+    distribution: log_uniform_values
+    min: 1e-4
+    max: 1e-3
 
   data_augmentation:
-    values: [True, False]
+    values: [True]
 
   batch_norm:
-    values: [True, False]
+    values: [True]
 
   dropout:
-    values: [0.2, 0.3]
+    distribution: uniform
+    min: 0.15
+    max: 0.25
 
   fc_neurons:
-    values: [128, 256, 512]
+    values: [256, 512]
+  
+  weight_decay:
+    values: [0.0, 1e-6]

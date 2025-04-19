@@ -8,10 +8,10 @@ train_dir = os.path.join(dataset_dir, 'train')
 val_dir = os.path.join(dataset_dir, 'val')
 test_dir = os.path.join(dataset_dir, 'test')
 
-# 'val' → 'test' [renaming as per assignment link]
+# 'val' -> 'test' [renaming as per assignment link]
 if os.path.exists(val_dir):
     os.rename(val_dir, test_dir)
-    print(f"Renamed 'val' → 'test'")
+    print(f"Renamed 'val' -> 'test'")
 else:
     print(f"'val' folder not found, skipping rename.")
 

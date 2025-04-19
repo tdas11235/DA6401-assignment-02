@@ -95,7 +95,7 @@ class Trainer:
         return total_loss / len(loader), acc
     
     def train(self, model_name: str, epochs: int = 10):
-        best_val_acc = 0.0
+        self.best_val_acc = 0.0
         epoch_bar = trange(epochs, desc="Training", unit="epoch")
         for epoch in epoch_bar:
             train_loss, train_acc = self.train_epoch()
@@ -113,8 +113,9 @@ class Trainer:
                 "val_loss": val_loss,
                 "val_acc": val_acc
             })
-            if val_acc > best_val_acc:
-                best_val_acc = val_acc
+            if val_acc > self.best_val_acc:
+                self.best_val_acc = val_acc
                 save_path = f"{self.model_folder}/{model_name}_best.pth"
                 torch.save(self.model.state_dict(), save_path)
                 print(f"New best model saved: {save_path}")
+        wandb.log({"best_val_acc": self.best_val_acc})
